@@ -1,3 +1,4 @@
+
 # ============================================================
 # DevOps Lab 1 — CI/CD Pipeline với GitHub Actions
 # Tự động deploy website lên GitHub Pages mỗi khi push code
@@ -5,20 +6,23 @@
 
 name: Deploy to GitHub Pages
 
-# === Khi nào pipeline chạy? ===
+# Khi nào pipeline chạy?
 on:
   push:
-    branches: [main]       # Chạy khi push lên nhánh main
-  workflow_dispatch:        # Cho phép chạy thủ công từ GitHub UI
+    branches: [main]
+  workflow_dispatch:
 
-# === Các job trong pipeline ===
+# CẤP QUYỀN GHI CHO GITHUB ACTIONS
+permissions:
+  contents: write
+
+# Các job trong pipeline
 jobs:
-  # Job 1: Build & Deploy
   build-and-deploy:
-    runs-on: ubuntu-latest   # Chạy trên máy ảo Ubuntu (free)
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code từ GitHub
+      # Step 1: Checkout code
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -30,7 +34,7 @@ jobs:
             echo "index.html found!"
             echo "File size: $(wc -c < index.html) bytes"
           else
-            echo " index.html NOT found!"
+            echo "index.html NOT found!"
             exit 1
           fi
 
